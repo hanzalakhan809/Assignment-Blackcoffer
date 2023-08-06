@@ -2,17 +2,11 @@ import React, { useState, useEffect } from 'react';
 import getChartData from '../../services/data';
 import BarChart from './BarChart';
 import LineChart from './LineChart';
-import DoughnutChart from './DoughnutChart';
+import PieChart from './PieChart';
 
-import { Bar, Doughnut, Line } from 'react-chartjs-2';
-import { Chart as ChartJS, BarElement, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineController, LineElement } from 'chart.js'
-import NavBar from './Navbar';
 
-ChartJS.register(BarElement, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineController, LineElement);
 
-// rest of your code ...
-
-function Dashboard() {
+function Dashboard(props) {
   let data = [{
     _id: "64ca4be9d11c03e8cb2720c5",
     end_year: "",
@@ -55,6 +49,7 @@ function Dashboard() {
     __v: 0
   }];
   const [hardData, setHardData] = useState(data);
+  const { open } = props;
 
   useEffect(() => {
     getChartData().then((res) => {
@@ -67,44 +62,39 @@ function Dashboard() {
     })
   }, []);
 
-  const generateChartData = (dataKey) => {
-    return {
-      labels: hardData.map(item => item[dataKey]),
-      datasets: [{
-        label: 'Intensity',
-        data: hardData.map(item => item.intensity),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1
-      }]
-    };
-  }
+ 
 
-  const sourceIntensityData = generateChartData('source');
-  const sourceLikelihoodData = generateChartData('likelihood');
-  const sourceRelevanceData = generateChartData('relevance');
-  const startYearIntensityData = generateChartData('start_year');
-  // Continue for other data variables...
+const removerDublicateObj=(arr)=>{
+  const names = arr.map(({ name }) => name);
+  const filtered = arr.filter(({ name }, index) => !names.includes(name, index + 1))
+  return filtered
+}
 
-  return (<>
+  const sourceIntensityData  = hardData.map(item => ({ name: item.topic, value1: item.end_year,value2:item.end_year,value3: item.country,value4:item.insight })).slice(0, 10);
+  const sourceLikelihoodData = removerDublicateObj(hardData.map(item => ({ name: item.source, value1: item.topic,value2:item.region,value3: item.relevance,value4:item.insight })).slice(0,10));
+  const sourceRelevanceData = removerDublicateObj(hardData.map(item => ({ name: item.topic , value1: item.intensity,value2:item.likelihood,value3: item.relevance, }))).slice(0,10);
+  const startYearIntensityData = hardData.map(item => ({ name: item.start_year, value: item.intensity })).slice(0, 10);
+ 
 
-    <NavBar />
-    <div className="grid grid-cols-3 gap-4 m-4">
-      <div className="col-span-1">
-        <BarChart data={sourceIntensityData} />
+  return (
+    <>
+      <div className={`grid grid-cols-1 gap-8 w-full h-auto mt-16 overflow-auto ${open? 'ml-72':'ml-20'} `}>
+        <div className="col-span-2 shadow-xl rounded-xl border mx-6 p-4 flex justify-center overflow-hidden">
+          <LineChart data={sourceRelevanceData} />
+        </div>
+        <div className="col-span-2 shadow-xl rounded-xl border mx-6 p-4 flex justify-center overflow-hidden">
+          <BarChart data={sourceLikelihoodData} />
+          
+        </div>
+        <div className="col-span-2 shadow-xl rounded-xl border mx-6 p-4 flex justify-center overflow-hidden">
+          <PieChart data={startYearIntensityData} className="ml-8" />
+        </div>
       </div>
-      <div className="col-span-1">
-        <BarChart data={sourceLikelihoodData} />
+      <div>
+      
       </div>
-      <div className="col-span-1">
-        <LineChart data={sourceRelevanceData} />
-      </div>
-      <div className="col-span-1">
-        <DoughnutChart data={startYearIntensityData} />
-      </div>
-      {/* ... Other chart instances ... */}
-    </div>
-  </>
+
+    </>
   );
 }
 export default Dashboard;
