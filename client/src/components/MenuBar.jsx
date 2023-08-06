@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const MenuBar = (props) => {
     const { open, setOpen } = props;
 
@@ -12,6 +12,24 @@ const MenuBar = (props) => {
         { title: "Files ", src: "Folder", gap: true },
         { title: "Setting", src: "Setting" },
     ];
+
+    useEffect(() => {
+        // Handler to call on window resize
+        function handleResize() {
+            // Set isMobile to true if window width is <= 768px, otherwise false
+            if (window.innerWidth <= 768) {
+                setOpen(false)
+            };
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        handleResize();
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     return (
         <div className={`fixed mt-14`}>
@@ -35,7 +53,7 @@ const MenuBar = (props) => {
                         className={`text-white origin-left font-medium text-xl duration-200 ${!open && "scale-0"
                             }`}
                     >
-                        Designer
+                        Blackcoffer
                     </h1>
                 </div>
                 <ul className="pt-6">

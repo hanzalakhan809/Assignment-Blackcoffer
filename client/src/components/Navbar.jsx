@@ -51,7 +51,7 @@ export default function NavBar(props) {
                   Home
                 </a>
                 <a href="#">Benefits</a>
-                <a href="#">Our Classes</a>
+                <a href="#">Our Projects</a>
                 <a href="#">Contact Us</a>
               </div>
             </div>
@@ -69,7 +69,7 @@ export default function NavBar(props) {
                 </div>
               </div>
               {/* Mobile navigation toggle */}
-              <div className="lg:hidden flex items-center">
+              <div className="lg:hidden flex items-center text-white" >
                 <button onClick={() => setToggleMenu(!toggleMenu)}>
                   <Bars3Icon className="h-6" />
                 </button>
@@ -84,12 +84,15 @@ export default function NavBar(props) {
           }`}
         >
           <div className="px-8">
-            <div className="flex flex-col gap-8 font-bold tracking-wider">
-              <a href="#" className="border-l-4 border-gray-600">
+            <div className="flex flex-col gap-4 font-bold tracking-wider">
+              <a href="#" className="mt-2">
                 Features
               </a>
+              <hr />
               <a href="#">Pricing</a>
+              <hr />
               <a href="#">Download</a>
+              <hr />
               <a href="#">Classic</a>
             </div>
           </div>

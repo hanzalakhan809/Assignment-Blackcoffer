@@ -1,9 +1,10 @@
-import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, Tooltip,CartesianGrid,Legend } from 'recharts';
+import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, Tooltip,CartesianGrid,Legend,ResponsiveContainer } from 'recharts';
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const BarChart = ({ data }) => {
   return (
-    <RechartsBarChart width={1200} height={400} data={data}>
+    <ResponsiveContainer width={"100%"} height={400} >
+    <RechartsBarChart data={data}>
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
@@ -14,6 +15,7 @@ const BarChart = ({ data }) => {
       <Bar dataKey="value3" fill="#00C49F" />
       <Bar dataKey="value4" fill="#FFBB28" />
     </RechartsBarChart>
+    </ResponsiveContainer>
   );
 };
 

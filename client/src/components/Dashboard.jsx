@@ -138,13 +138,16 @@ const resetAllFilter=()=>{
   return (
     <>
 
-      <div className={`grid grid-cols-1 gap-8 w-full h-auto mt-16 overflow-auto ${open ? 'ml-72' : 'ml-20'} bg-[#f2f2f2] `}>
+      <div className={`grid grid-cols-1 gap-8 w-full  mt-16 overflow-auto ${open ? 'ml-72' : 'ml-20'} bg-[#f2f2f2] `}>
 
 
-        <div className="filter-section">
+        {/* <div className={`filter-section col-span-2 flex flex-row flex-wrap w-full gap-auto m-5 w-[100% - ${open ? '18rem' : '5rem'}] `}> */}
+
+        {/** ---------------------- Different stats content 1 ------------------------- */}
+        <div className={`flex w-full flex-grow flex-wrap m-5 gap-3 items-center justify-center `}>
 
           {/* End Year Filter */}
-          <select value={endYearFilter} onChange={e => setEndYearFilter(e.target.value)}>
+          <select value={endYearFilter} onChange={e => setEndYearFilter(e.target.value)}  className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto '>
             <option value="">All End Years</option>
             {uniqueEndYears.map(year => {
               if (year !== "") {
@@ -154,7 +157,7 @@ const resetAllFilter=()=>{
           </select>
 
           {/* Topic Filter */}
-          <select value={topicFilter} onChange={e => setTopicFilter(e.target.value)}>
+          <select value={topicFilter} onChange={e => setTopicFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto'>
             <option value="">All Topics</option>
             {uniqueTopics.map(topic => {
               if (topic !== "") {
@@ -164,7 +167,7 @@ const resetAllFilter=()=>{
           </select>
 
           {/* Sector Filter */}
-          <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)}>
+          <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto'>
             <option value="">All Sectors</option>
             {uniqueSectors.map(sector => {
               if (sector !== "") {
@@ -174,7 +177,7 @@ const resetAllFilter=()=>{
           </select>
 
           {/* Region Filter */}
-          <select value={regionFilter} onChange={e => setRegionFilter(e.target.value)}>
+          <select value={regionFilter} onChange={e => setRegionFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto'>
             <option value="">All Regions</option>
             {uniqueRegions.map(region => {
               if (region !== "") {
@@ -184,7 +187,7 @@ const resetAllFilter=()=>{
           </select>
 
           {/* PEST Filter */}
-          <select value={pestFilter} onChange={e => setPESTFilter(e.target.value)}>
+          <select value={pestFilter} onChange={e => setPESTFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto'>
             <option value="">All PESTs</option>
             {uniquePESTs.map(pest => {
               if (pest !== "") {
@@ -194,7 +197,7 @@ const resetAllFilter=()=>{
           </select>
 
           {/* Source Filter */}
-          <select value={sourceFilter} onChange={e => setSourceFilter(e.target.value)}>
+          <select value={sourceFilter} onChange={e => setSourceFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto'>
             <option value="">All Sources</option>
             {uniqueSources.map(source => {
               if (source !== "") {
@@ -204,7 +207,7 @@ const resetAllFilter=()=>{
           </select>
 
           {/* Country Filter */}
-          <select value={countryFilter} onChange={e => setCountryFilter(e.target.value)}>
+          <select value={countryFilter} onChange={e => setCountryFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto '>
             <option value="">All Countries</option>
             {uniqueCountries.map(country => {
               if (country !== "") {
@@ -212,11 +215,9 @@ const resetAllFilter=()=>{
               }
             })}
           </select>
-          <button onClick={resetAllFilter}></button>
-        </div>
-
-        {/** ---------------------- Different stats content 1 ------------------------- */}
-        <div className="grid lg:grid-cols-4 mt-2 md:grid-cols-2 grid-cols-1 gap-6 mx-6">
+          {/* <button onClick={resetAllFilter}></button> */}
+        </div><br />
+        <div className="grid lg:grid-cols-4 mt-2 md:grid-cols-2 grid-cols-1 gap-6 mx-6 mr-0">
           {
             statsData.map((d, k) => {
               return (
@@ -225,20 +226,17 @@ const resetAllFilter=()=>{
             })
           }
         </div>
-        <div className="col-span-2 shadow-xl rounded-xl border mx-6 p-4 flex justify-center overflow-hidden bg-[#fffff]">
+        <div className="col-span-2 shadow-xl rounded-xl border mx-6 p-4 flex justify-center overflow-hidden bg-white">
           <LineChart data={sourceRelevanceData} />
         </div>
-        <div className="col-span-2 shadow-xl rounded-xl border mx-6 p-4 flex justify-center overflow-hidden bg-[#fffff]">
+        <div className="col-span-2 shadow-xl rounded-xl border mx-6 p-4 flex justify-center overflow-hidden bg-white">
           <BarChart data={sourceLikelihoodData} />
 
         </div>
-        <div className="col-span-2 shadow-xl rounded-xl border mx-6 p-4 flex justify-center overflow-hidden bg-[#fffff]">
-          <PieChart data={startYearIntensityData} className="ml-8" />
+        <div className="col-span-2 shadow-xl rounded-xl border mx-6 flex justify-center overflow-hidden bg-white">
+          <PieChart data={startYearIntensityData} open={open} />
         </div>
       </div >
-      <div>
-
-      </div>
 
     </>
   );

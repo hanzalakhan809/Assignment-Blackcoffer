@@ -1,18 +1,41 @@
-import { PieChart as RechartsPieChart, Pie, Tooltip, Cell } from 'recharts';
+import {React,useState,useEffect} from 'react';
+import { PieChart as RechartsPieChart, Pie, Tooltip, Cell ,ResponsiveContainer} from 'recharts';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-const PieChart = ({ data }) => {
+const PieChart = ({ data,open }) => {
+  const [isMobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    // Handler to call on window resize
+    function handleResize() {
+      // Set isMobile to true if window width is <= 768px, otherwise false
+      setMobile(window.innerWidth <= 768);
+    }
+
+    // Subscribe to window resize events
+    window.addEventListener('resize', handleResize);
+
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+
+    // Unsubscribe from resize events when component is unmounted
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);  
+
   return (
-    <RechartsPieChart width={900} height={400}>
+    <ResponsiveContainer width="100%" height={400}>
+    <RechartsPieChart>
       <Pie
         dataKey="value"
         startAngle={360}
         endAngle={0}
         data={data}
-        cx={200}
-        cy={200}
-        outerRadius={150}
+        cx="50%"  // Centered
+        cy="50%"  // Centered
+        outerRadius={isMobile? 85: 150}  // Percentage or static value, depending on your design
         fill="#8884d8"
         label
       >
@@ -22,6 +45,8 @@ const PieChart = ({ data }) => {
       </Pie>
       <Tooltip />
     </RechartsPieChart>
+  </ResponsiveContainer>
+  
   );
 };
 
