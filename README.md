@@ -2,7 +2,7 @@
 This is MERN Stack App Dashboard assignment given by blackcoffer
 
 ## Technology Used
-ReactJs,Tailwind Css,Rechart Js
+ReactJs,Tailwind Css,Rechart Js,MongoDB,Expess
 
 # How to run the code
 ## For Github user
