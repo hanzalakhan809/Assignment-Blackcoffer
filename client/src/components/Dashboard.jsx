@@ -52,17 +52,27 @@ function Dashboard(props) {
     likelihood: 3,
     __v: 0
   }];
-  const [hardData, setHardData] = useState(data);
+
   const { open } = props;
+  const [hardData, setHardData] = useState(data);
+
+  const [endYearFilter, setEndYearFilter] = useState(null);
+  const [topicFilter, setTopicFilter] = useState(null);
+  const [sectorFilter, setSectorFilter] = useState(null);
+  const [regionFilter, setRegionFilter] = useState(null);
+  const [pestFilter, setPestFilter] = useState(null);
+  const [sourceFilter, setSourceFilter] = useState(null);
+  const [countryFilter, setCountryFilter] = useState(null);
+
 
   useEffect(() => {
     getChartData().then((res) => {
-      console.log(res); // log the response to verify the data
+      console.log(res);
 
       setHardData(res);
 
     }).catch(err => {
-      console.error(err); // log any errors
+      console.error(err);
     })
   }, []);
 
@@ -75,26 +85,16 @@ function Dashboard(props) {
   }
 
 
+  // const resetAllFilter=()=>{
+  //   setEndYearFilter(null);
+  //   setTopicFilter(null);
+  //   setSectorFilter(null);
+  //   setRegionFilter(null);
+  //   setPestFilter(null);
+  //   setSourceFilter(null);
+  //   setCountryFilter(null);
 
-  const [endYearFilter, setEndYearFilter] = useState(null);
-  const [topicFilter, setTopicFilter] = useState(null);
-  const [sectorFilter, setSectorFilter] = useState(null);
-  const [regionFilter, setRegionFilter] = useState(null);
-  const [pestFilter, setPestFilter] = useState(null);
-  const [sourceFilter, setSourceFilter] = useState(null);
-  const [countryFilter, setCountryFilter] = useState(null);
-  // ... and so on for each filter
-
-const resetAllFilter=()=>{
-  setEndYearFilter(null);
-  setTopicFilter(null);
-  setSectorFilter(null);
-  setRegionFilter(null);
-  setPestFilter(null);
-  setSourceFilter(null);
-  setCountryFilter(null);
-
-}
+  // }
 
   const filterData = (data) => {
     let filtered = [...data];
@@ -105,7 +105,6 @@ const resetAllFilter=()=>{
     if (regionFilter) filtered = filtered.filter(item => item.region === regionFilter);
     if (pestFilter) filtered = filtered.filter(item => item.pestle === pestFilter);
     if (sourceFilter) filtered = filtered.filter(item => item.source === sourceFilter);
-    // ... additional filters as needed
 
     return filtered;
   }
@@ -122,32 +121,25 @@ const resetAllFilter=()=>{
   const filteredData = filterData(hardData);
 
 
-  // const sourceIntensityData = hardData.map(item => ({ name: item.topic, value1: item.end_year, value2: item.end_year, value3: item.country, value4: item.insight })).slice(0, 15);
-  const sourceLikelihoodData = removerDublicateObj(filteredData.map(item => ({ name: item.source, value1: item.topic, value2: item.region, value3: item.relevance, value4: item.insight })));
-  const sourceRelevanceData = removerDublicateObj(filteredData.map(item => ({ name: item.topic, value1: item.intensity, value2: item.likelihood, value3: item.relevance, }))).slice(0, 15);
+  const sourceLikelihoodData = removerDublicateObj(filteredData.map(item => ({ name: item.source, topic: item.topic, region: item.region, relevance: item.relevance, insight: item.insight })));
+  const sourceRelevanceData = removerDublicateObj(filteredData.map(item => ({ name: item.topic, intensity: item.intensity, likelihood: item.likelihood, relevance: item.relevance, }))).slice(0, 15);
   const startYearIntensityData = filteredData.map(item => ({ name: item.start_year, value: item.intensity })).slice(0, 15);
 
 
   const statsData = [
-    { title: "New Users", value: "34.7k", icon: <UserGroupIcon className='w-8 h-8' />, description: "↗︎ 2300 (22%)" },
-    { title: "Total Sales", value: "$34,545", icon: <CreditCardIcon className='w-8 h-8' />, description: "Current month" },
-    { title: "Pending Leads", value: "450", icon: <CircleStackIcon className='w-8 h-8' />, description: "50 in hot leads" },
-    { title: "Active Users", value: "5.6k", icon: <UsersIcon className='w-8 h-8' />, description: "↙ 300 (18%)" },
+    { title: "Countries", value: "36", icon: <UserGroupIcon className='w-8 h-8' />, description: "↗︎ Usage (22%)" },
+    { title: "Sources", value: "150", icon: <CreditCardIcon className='w-8 h-8' />, description: "Current Year" },
+    { title: "Topic", value: "57", icon: <CircleStackIcon className='w-8 h-8' />, description: "50 in hot Topics" },
+    { title: "Sectors", value: "14", icon: <UsersIcon className='w-8 h-8' />, description: "↙ Usage (18%)" },
   ]
 
   return (
     <>
-
       <div className={`grid grid-cols-1 gap-8 w-full  mt-16 overflow-auto ${open ? 'ml-72' : 'ml-20'} bg-[#f2f2f2] `}>
-
-
-        {/* <div className={`filter-section col-span-2 flex flex-row flex-wrap w-full gap-auto m-5 w-[100% - ${open ? '18rem' : '5rem'}] `}> */}
-
-        {/** ---------------------- Different stats content 1 ------------------------- */}
         <div className={`flex w-full flex-grow flex-wrap m-5 gap-3 items-center justify-center `}>
-
+        
           {/* End Year Filter */}
-          <select value={endYearFilter} onChange={e => setEndYearFilter(e.target.value)}  className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto '>
+          <select value={endYearFilter} onChange={e => setEndYearFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto '>
             <option value="">All End Years</option>
             {uniqueEndYears.map(year => {
               if (year !== "") {
@@ -215,8 +207,8 @@ const resetAllFilter=()=>{
               }
             })}
           </select>
-          {/* <button onClick={resetAllFilter}></button> */}
-        </div><br />
+        </div>
+        <br />
         <div className="grid lg:grid-cols-4 mt-2 md:grid-cols-2 grid-cols-1 gap-6 mx-6 mr-0">
           {
             statsData.map((d, k) => {

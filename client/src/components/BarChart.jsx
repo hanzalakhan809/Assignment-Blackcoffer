@@ -10,10 +10,10 @@ const BarChart = ({ data }) => {
       <Tooltip />
       <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
       <Legend />
-      <Bar dataKey="value1" fill="#FF8042" />
-      <Bar dataKey="value2" fill="#0088FE" />
-      <Bar dataKey="value3" fill="#00C49F" />
-      <Bar dataKey="value4" fill="#FFBB28" />
+      <Bar dataKey="topic" fill="#FF8042" />
+      <Bar dataKey="region" fill="#0088FE" />
+      <Bar dataKey="relevance" fill="#00C49F" />
+      <Bar dataKey="insight" fill="#FFBB28" />
     </RechartsBarChart>
     </ResponsiveContainer>
   );

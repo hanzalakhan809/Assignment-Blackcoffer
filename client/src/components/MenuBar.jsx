@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 const MenuBar = (props) => {
     const { open, setOpen } = props;
 

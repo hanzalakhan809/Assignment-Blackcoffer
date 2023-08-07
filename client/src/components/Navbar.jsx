@@ -11,25 +11,9 @@ export default function NavBar(props) {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // useEffect(() => {
-  //   const onScroll = () => {
-  //     const scrollCheck = window.scrollY > 50;
-  //     if (scrollCheck !== isScrolled) {
-  //       setIsScrolled(scrollCheck);
-  //       props.setScrolled(true)
-  //     }
-     
-  //   };
 
-  //   document.addEventListener("scroll", onScroll);
-
-  //   return () => {
-  //     document.removeEventListener("scroll", onScroll);
-  //   };
-  // }, [isScrolled]);
   return (
     <div className="app  ">
-      {/* <nav className={` ${isScrolled ? " fixed w-full z-50 bg-dark-purple" : ""}`}> */}
       <nav className={` ${isScrolled ? " fixed w-full z-50 bg-dark-purple" : "fixed w-full z-50 bg-dark-purple"}`}>
         <div className="max-w-7xl mx-auto ">
           <div className="flex mx-auto justify-between w-5/6 ">
@@ -41,7 +25,7 @@ export default function NavBar(props) {
                   href="/"
                   className="flex gap-1 font-bold text-gray-700 items-center "
                 >
-                  <PaperAirplaneIcon className="h-6 w-6 text-primary text-white" />
+                  <PaperAirplaneIcon className="h-6 w-6  text-white" />
                   <span className="text-white">Blackcoffer</span>
                 </a>
               </div>

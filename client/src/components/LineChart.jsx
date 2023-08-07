@@ -10,10 +10,10 @@ const LineChart = ({ data }) => {
       <Tooltip />
       <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
       <Legend />
-      <Line type="monotone" dataKey="value1" stroke="#8884d8" />
-      <Line type="monotone" dataKey="value2" stroke="#0088FE" />
-      <Line type="monotone" dataKey="value3" stroke="#FFBB28" />
-      <Line type="monotone" dataKey="value4" stroke="#FF8042" />
+      <Line type="monotone" dataKey="intensity" stroke="#8884d8" />
+      <Line type="monotone" dataKey="likelihood" stroke="#0088FE" />
+      <Line type="monotone" dataKey="relevance" stroke="#FFBB28" />
+      {/* <Line type="monotone" dataKey="value4" stroke="#FF8042" /> */}
     </RechartsLineChart>
     </ResponsiveContainer>
   );
