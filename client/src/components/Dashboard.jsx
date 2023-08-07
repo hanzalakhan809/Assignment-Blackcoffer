@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import getChartData from '../../services/data';
-import BarChart from './BarChart';
-import LineChart from './LineChart';
-import PieChart from './PieChart';
+import BarChart from './charts/BarChart';
+import LineChart from './charts/LineChart';
+import PieChart from './charts/PieChart';
 import DashboardStats from './DashboardStats';
 import UserGroupIcon from '@heroicons/react/24/outline/UserGroupIcon';
 import UsersIcon from '@heroicons/react/24/outline/UsersIcon'
@@ -121,7 +121,7 @@ function Dashboard(props) {
   const filteredData = filterData(hardData);
 
 
-  const sourceLikelihoodData = removerDublicateObj(filteredData.map(item => ({ name: item.source, topic: item.topic, region: item.region, relevance: item.relevance, insight: item.insight })));
+  const sourceLikelihoodData = removerDublicateObj(filteredData.map(item => ({ name: item.source, topic: item.topic, region: item.region, relevance: item.relevance, insight: item.insight }))).slice(0, 15);
   const sourceRelevanceData = removerDublicateObj(filteredData.map(item => ({ name: item.topic, intensity: item.intensity, likelihood: item.likelihood, relevance: item.relevance, }))).slice(0, 15);
   const startYearIntensityData = filteredData.map(item => ({ name: item.start_year, value: item.intensity })).slice(0, 15);
 
@@ -136,10 +136,10 @@ function Dashboard(props) {
   return (
     <>
       <div className={`grid grid-cols-1 gap-8 w-full  mt-16 overflow-auto ${open ? 'ml-72' : 'ml-20'} bg-[#f2f2f2] `}>
-        <div className={`flex w-full flex-grow flex-wrap m-5 gap-3 items-center justify-center `}>
+        <div className={`stats shadow py-6 flex w-auto flex-grow flex-wrap mx-5 mt-5 mb-0 mr-0 gap-3 items-center justify-center `}>
         
           {/* End Year Filter */}
-          <select value={endYearFilter} onChange={e => setEndYearFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto '>
+          <select value={endYearFilter} onChange={e => setEndYearFilter(e.target.value)} className=' stat shadow rounded-md px-2 py-2 font-serif text-slate-700 w-36 mr-auto ml-auto '>
             <option value="">All End Years</option>
             {uniqueEndYears.map(year => {
               if (year !== "") {
@@ -149,7 +149,7 @@ function Dashboard(props) {
           </select>
 
           {/* Topic Filter */}
-          <select value={topicFilter} onChange={e => setTopicFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto'>
+          <select value={topicFilter} onChange={e => setTopicFilter(e.target.value)} className='shadow rounded-md px-2 py-2 font-serif text-slate-700 w-36 mr-auto ml-auto'>
             <option value="">All Topics</option>
             {uniqueTopics.map(topic => {
               if (topic !== "") {
@@ -159,7 +159,7 @@ function Dashboard(props) {
           </select>
 
           {/* Sector Filter */}
-          <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto'>
+          <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)} className='shadow rounded-md px-2 py-2 font-serif text-slate-700 w-36 mr-auto ml-auto'>
             <option value="">All Sectors</option>
             {uniqueSectors.map(sector => {
               if (sector !== "") {
@@ -169,7 +169,7 @@ function Dashboard(props) {
           </select>
 
           {/* Region Filter */}
-          <select value={regionFilter} onChange={e => setRegionFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto'>
+          <select value={regionFilter} onChange={e => setRegionFilter(e.target.value)} className='shadow rounded-md px-2 py-2 font-serif text-slate-700 w-36 mr-auto ml-auto'>
             <option value="">All Regions</option>
             {uniqueRegions.map(region => {
               if (region !== "") {
@@ -179,27 +179,27 @@ function Dashboard(props) {
           </select>
 
           {/* PEST Filter */}
-          <select value={pestFilter} onChange={e => setPESTFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto'>
+          <select value={pestFilter} onChange={e => setPESTFilter(e.target.value)} className='shadow rounded-md px-2 py-2 font-serif text-slate-700 w-36 mr-auto ml-auto'>
             <option value="">All PESTs</option>
-            {uniquePESTs.map(pest => {
+            {uniquePESTs.map((pest,index) => {
               if (pest !== "") {
-                return <option key={pest} value={pest}>{pest}</option>
+                return <option key={index} value={pest}>{pest}</option>
               }
             })}
           </select>
 
           {/* Source Filter */}
-          <select value={sourceFilter} onChange={e => setSourceFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto'>
+          <select value={sourceFilter} onChange={e => setSourceFilter(e.target.value)} className='shadow rounded-md px-2 py-2 font-serif text-slate-700 w-36 mr-auto ml-auto'>
             <option value="">All Sources</option>
-            {uniqueSources.map(source => {
+            {uniqueSources.map((source,index) => {
               if (source !== "") {
-                return <option key={source} value={source}>{source}</option>
+                return <option key={index} value={source}>{source}</option>
               }
             })}
           </select>
 
           {/* Country Filter */}
-          <select value={countryFilter} onChange={e => setCountryFilter(e.target.value)} className='shadow-md rounded-md px-2 py-2 font-serif text-slate-700 w-40 mr-auto ml-auto '>
+          <select value={countryFilter} onChange={e => setCountryFilter(e.target.value)} className='shadow rounded-md px-2 py-2 font-serif text-slate-700 w-36 mr-auto ml-auto '>
             <option value="">All Countries</option>
             {uniqueCountries.map(country => {
               if (country !== "") {

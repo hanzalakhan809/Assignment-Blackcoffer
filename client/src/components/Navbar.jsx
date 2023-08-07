@@ -1,4 +1,4 @@
-import { useState ,useEffect} from "react";
+import { useState } from "react";
 import {
   PaperAirplaneIcon,
   MoonIcon,
@@ -35,7 +35,7 @@ export default function NavBar(props) {
                   Home
                 </a>
                 <a href="#">Benefits</a>
-                <a href="#">Our Projects</a>
+                <a href="https://github.com/hanzalakhan809" target="_blank">Our Projects</a>
                 <a href="#">Contact Us</a>
               </div>
             </div>
